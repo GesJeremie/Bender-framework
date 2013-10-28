@@ -45,25 +45,98 @@
 | the active record class
 */
 
-$active_group = 'default';
+$active_group = ENVIRONMENT;
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = '';
-$db['default']['password'] = '';
-$db['default']['database'] = '';
-$db['default']['dbdriver'] = 'mysql';
-$db['default']['dbprefix'] = '';
-$db['default']['pconnect'] = TRUE;
-$db['default']['db_debug'] = TRUE;
-$db['default']['cache_on'] = FALSE;
-$db['default']['cachedir'] = '';
-$db['default']['char_set'] = 'utf8';
-$db['default']['dbcollat'] = 'utf8_general_ci';
-$db['default']['swap_pre'] = '';
-$db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE;
+// Used when you are in development mode
+$db['development'] = array(
 
+	'hostname' => 'localhost',
+	'username' => '',
+	'database' => '',
+	'dbdriver' => '',
+	'dbprefix' => '',
+	'pconnect' => TRUE,
+	'db_debug' => TRUE,
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'autoint'  => TRUE,
+	'stricton' => FALSE 
+
+	);
+
+// Used when you are in testing mode
+$db['testing'] = array(
+
+	'hostname' => 'localhost',
+	'username' => '',
+	'database' => '',
+	'dbdriver' => '',
+	'dbprefix' => '',
+	'pconnect' => TRUE,
+	'db_debug' => TRUE,
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'autoint'  => TRUE,
+	'stricton' => FALSE 
+
+	);
+
+// Used when you are in production mode
+$db['production'] = array(
+
+	'hostname' => 'localhost',
+	'username' => '',
+	'database' => '',
+	'dbdriver' => '',
+	'dbprefix' => '',
+	'pconnect' => TRUE,
+	'db_debug' => TRUE,
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'autoint'  => TRUE,
+	'stricton' => FALSE 
+
+	);
+
+/*
+| -------------------------------------------------------------------
+| Below you can add your customs mode
+| -------------------------------------------------------------------
+| 
+| Just change the $active_group var to use your custom mode
+| 
+|
+*/
+/*
+$db['local_production'] = array(
+
+	'hostname' => 'localhost',
+	'username' => '',
+	'database' => '',
+	'dbdriver' => '',
+	'dbprefix' => '',
+	'pconnect' => TRUE,
+	'db_debug' => TRUE,
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'autoint'  => TRUE,
+	'stricton' => FALSE 
+
+	);
+*/
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */
