@@ -149,6 +149,31 @@ if ( ! function_exists('assets_url'))
 
 // ------------------------------------------------------------------------
 
+// ------------------------------------------------------------------------
+
+/**
+ * Img Url
+ *
+ * Returns the img url concated with your uri
+ *
+ * @package Bender Framework
+ * @access	public
+ * @param 	string
+ * @return	string
+ */
+if ( ! function_exists('img_url')) 
+{
+	function img_url($uri='') 
+	{
+		$CI =& get_instance();
+		$uri = 'assets/img/' . ltrim($uri, '/');
+		return $CI->config->base_url($uri);	
+	}
+}
+
+// ------------------------------------------------------------------------
+
+
 /**
  * Css Url
  *
