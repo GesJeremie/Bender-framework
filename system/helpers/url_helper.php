@@ -161,7 +161,7 @@ if ( ! function_exists('assets_url'))
  */
 if ( ! function_exists('css_url'))
 {
-	function css_url($uri) 
+	function css_url($uri='') 
 	{
 		$CI =& get_instance();
 		$uri = 'assets/css/' . ltrim($uri, '/');
@@ -230,7 +230,7 @@ if ( ! function_exists('libs_url'))
 	{
 		$CI =& get_instance();
 		$uri = 'assets/libs/' . ltrim($uri, '/');
-		return $CI->config->site_url($uri);
+		return $CI->config->base_url($uri);
 	}
 }
 
