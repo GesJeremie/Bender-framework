@@ -44,6 +44,11 @@ class Base_controller extends CI_Controller {
 	 */
 	protected $libs = array();
 
+	/**
+	 * List of all type requests
+	 *
+	 * @var array
+	 */
 	protected $requests = array();
 
 	// ------------------------------------------------------------------------
