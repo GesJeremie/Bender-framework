@@ -128,6 +128,115 @@ if ( ! function_exists('index_page'))
 // ------------------------------------------------------------------------
 
 /**
+ * Assets Url
+ *
+ * Returns the assets url concated with your uri
+ *
+ * @package Bender Framework
+ * @access	public
+ * @param 	string
+ * @return	string
+ */
+if ( ! function_exists('assets_url')) 
+{
+	function assets_url($uri='') 
+	{
+		$CI =& get_instance();
+		$uri = 'assets/' . ltrim($uri, '/');
+		return $CI->config->base_url($uri);	
+	}
+}
+
+// ------------------------------------------------------------------------
+
+/**
+ * Css Url
+ *
+ * Returns the css url concated with your uri
+ *
+ * @package Bender Framework
+ * @access	public
+ * @param 	string
+ * @return	string
+ */
+if ( ! function_exists('css_url'))
+{
+	function css_url($uri) 
+	{
+		$CI =& get_instance();
+		$uri = 'assets/css/' . ltrim($uri, '/');
+		return $CI->config->base_url($uri);
+	}
+}
+// ------------------------------------------------------------------------
+
+/**
+ * Js Url
+ *
+ * Returns the js url concated with your uri
+ *
+ * @package Bender Framework
+ * @access	public
+ * @param 	string
+ * @return	string
+ */
+if ( ! function_exists('js_url'))
+{
+	function js_url($uri='')
+	{
+		$CI =& get_instance();
+		$uri = 'assets/js/' . ltrim($uri, '/');
+		return $CI->config->base_url($uri); 
+	}
+}
+
+// ------------------------------------------------------------------------
+
+/**
+ * Fonts Url
+ *
+ * Returns the fonts url concated with your uri
+ *
+ * @package Bender Framework
+ * @access	public
+ * @param 	string
+ * @return	string
+ */
+if ( ! function_exists('fonts_url'))
+{
+	function fonts_url($uri='')
+	{
+		$CI =& get_instance();
+		$uri = 'assets/fonts/' . ltrim($uri, '/');
+		return $CI->config->base_url($uri);
+	}
+}
+
+// ------------------------------------------------------------------------
+
+/**
+ * Libs Url
+ *
+ * Returns the libs url concated with your uri
+ * 
+ * @package Bender Framework
+ * @access	public
+ * @param 	string
+ * @return	string
+ */
+if ( ! function_exists('libs_url'))
+{
+	function libs_url($uri='')
+	{
+		$CI =& get_instance();
+		$uri = 'assets/libs/' . ltrim($uri, '/');
+		return $CI->config->site_url($uri);
+	}
+}
+
+// ------------------------------------------------------------------------
+
+/**
  * Anchor Link
  *
  * Creates an anchor based on the local URL.
@@ -340,7 +449,7 @@ if ( ! function_exists('safe_mailto'))
 		$x = array_reverse($x);
 		ob_start();
 
-	?><script type="text/javascript">
+		?><script type="text/javascript">
 	//<![CDATA[
 	var l=new Array();
 	<?php
@@ -348,15 +457,15 @@ if ( ! function_exists('safe_mailto'))
 	foreach ($x as $val){ ?>l[<?php echo $i++; ?>]='<?php echo $val; ?>';<?php } ?>
 
 	for (var i = l.length-1; i >= 0; i=i-1){
-	if (l[i].substring(0, 1) == '|') document.write("&#"+unescape(l[i].substring(1))+";");
-	else document.write(unescape(l[i]));}
+		if (l[i].substring(0, 1) == '|') document.write("&#"+unescape(l[i].substring(1))+";");
+		else document.write(unescape(l[i]));}
 	//]]>
 	</script><?php
 
-		$buffer = ob_get_contents();
-		ob_end_clean();
-		return $buffer;
-	}
+	$buffer = ob_get_contents();
+	ob_end_clean();
+	return $buffer;
+}
 }
 
 // ------------------------------------------------------------------------
@@ -395,14 +504,14 @@ if ( ! function_exists('auto_link'))
 					}
 
 					$str = str_replace($matches['0'][$i],
-										$matches['1'][$i].'<a href="http'.
-										$matches['4'][$i].'://'.
-										$matches['5'][$i].
-										$matches['6'][$i].'"'.$pop.'>http'.
-										$matches['4'][$i].'://'.
-										$matches['5'][$i].
-										$matches['6'][$i].'</a>'.
-										$period, $str);
+						$matches['1'][$i].'<a href="http'.
+						$matches['4'][$i].'://'.
+						$matches['5'][$i].
+						$matches['6'][$i].'"'.$pop.'>http'.
+						$matches['4'][$i].'://'.
+						$matches['5'][$i].
+						$matches['6'][$i].'</a>'.
+						$period, $str);
 				}
 			}
 		}
@@ -480,11 +589,11 @@ if ( ! function_exists('url_title'))
 	{
 		if ($separator == 'dash') 
 		{
-		    $separator = '-';
+			$separator = '-';
 		}
 		else if ($separator == 'underscore')
 		{
-		    $separator = '_';
+			$separator = '_';
 		}
 		
 		$q_separator = preg_quote($separator);
@@ -494,7 +603,7 @@ if ( ! function_exists('url_title'))
 			'[^a-z0-9 _-]'          => '',
 			'\s+'                   => $separator,
 			'('.$q_separator.')+'   => $separator
-		);
+			);
 
 		$str = strip_tags($str);
 
@@ -538,9 +647,9 @@ if ( ! function_exists('redirect'))
 		switch($method)
 		{
 			case 'refresh'	: header("Refresh:0;url=".$uri);
-				break;
+			break;
 			default			: header("Location: ".$uri, TRUE, $http_response_code);
-				break;
+			break;
 		}
 		exit;
 	}
