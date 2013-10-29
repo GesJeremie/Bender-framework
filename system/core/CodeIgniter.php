@@ -228,6 +228,9 @@
 	// Load the base controller class
 	require BASEPATH.'core/Controller.php';
 
+	// Load the dry Base_controller 
+	require BASEPATH.'core/Base_controller.php';
+
 	function &get_instance()
 	{
 		return CI_Controller::get_instance();
