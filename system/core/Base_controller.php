@@ -44,6 +44,8 @@ class Base_controller extends CI_Controller {
 	 */
 	protected $libs = array();
 
+	protected $requests = array();
+
 	// ------------------------------------------------------------------------
 
 	public function __construct()
@@ -52,6 +54,62 @@ class Base_controller extends CI_Controller {
 
 		// Autoload helpers/models/libraries
 		$this->_loader();
+
+	}
+
+	// ------------------------------------------------------------------------
+
+	public function _remap($method, $params) {
+
+		$accept_request = TRUE;
+
+		// Check requests
+		if ( ! empty($this->requests))
+		{
+			$request_method = $this->input->server('REQUEST_METHOD');
+
+			if (isset($this->requests[$method])) 
+			{
+				// Security
+				$this->requests[$method] = strtoupper($this->requests[$method]);
+
+				if (in_array($this->requests[$method], array('POST', 'PUT', 'GET', 'DELETE')))
+				{
+
+					// If request method added by developer
+					// isn't equal with the current method
+					if ($this->requests[$method] !== $request_method)
+					{
+						$accept_request = FALSE;
+					}
+
+				}
+
+			}
+
+
+		}
+
+		if (method_exists($this, $method) && $accept_request === TRUE)
+		{
+			// Call the current method
+			call_user_func_array(array($this, $method), $params);
+		}
+		else 
+		{
+			// Check if method "_404()" added by the developer
+			if (method_exists($this, '_404'))
+			{
+				call_user_func(array($this, '_404'));
+			} 
+			else 
+			{
+				show_404(strtolower(get_class($this)) . '/' . $method);
+			}
+		}
+
+
+
 
 	}
 
