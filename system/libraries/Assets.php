@@ -165,7 +165,7 @@ class CI_Assets {
 	 */
 	public function register_css($name, $version, $src, $compress = FALSE) 
 	{	
-		$this->_register('css', $version, $src, $compress);
+		$this->_register('css', $name, $version, $src, $compress);
 	}
 
 	/**
