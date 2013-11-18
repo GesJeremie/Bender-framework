@@ -10,7 +10,7 @@
 */
 $assets['compress'] = array(
 
-	'development' => TRUE,
+	'development' => FALSE,
 	'testing'     => FALSE,
 	'production'  => FALSE
  
@@ -49,18 +49,7 @@ $assets['compress'] = array(
 | 	);
 | 
 */
-$assets['css'] = array(
-
-	array(
-
-		'name' => 'layout',
-		'version' => '',
-		'compress' => FALSE
-
-		)
-
-	);
-
+$assets['css'] = array();
 
 /*
 |--------------------------------------------------------------------------
@@ -86,17 +75,8 @@ $assets['css'] = array(
 | 	);
 | 
 */
- $assets['js'] = array(
- 
- 	array(
- 
-		'name' => 'toast',
- 		'version' => '0.1',
-		'src' => 'js/toast.js',
- 		'compress' => FALSE
+$assets['js'] = array();
 
-		)
-	);
 
 /* End of file assets.php */
 /* Location: ./application/config/assets.php */
