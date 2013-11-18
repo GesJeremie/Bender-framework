@@ -51,6 +51,13 @@ class Base_controller extends CI_Controller {
 	 */
 	protected $requests = array();
 
+	/**
+	 * Base sanitize rules for auto datas validation
+	 *
+	 * @var string
+	 */
+	protected $sanitize_rules = 'xss_clean|encode_php_tags|prep_for_form';
+
 	// ------------------------------------------------------------------------
 
 	public function __construct()
@@ -64,7 +71,8 @@ class Base_controller extends CI_Controller {
 
 	// ------------------------------------------------------------------------
 
-	public function _remap($method, $params) {
+	public function _remap($method, $params) 
+	{
 
 		$accept_request = TRUE;
 
@@ -97,6 +105,10 @@ class Base_controller extends CI_Controller {
 
 		if (method_exists($this, $method) && $accept_request === TRUE)
 		{
+
+			// Autoload form validation rules
+			$this->_load_rules($method);
+
 			// Call the current method
 			call_user_func_array(array($this, $method), $params);
 		}
@@ -113,9 +125,6 @@ class Base_controller extends CI_Controller {
 			}
 		}
 
-
-
-
 	}
 
 	// ------------------------------------------------------------------------
@@ -128,7 +137,8 @@ class Base_controller extends CI_Controller {
 	 * @access	private
 	 * @return	void
 	 */
-	private function _loader() {
+	private function _loader() 
+	{
 
 		// Helpers to load ?
 		if ( ! empty($this->helpers)) 
@@ -197,6 +207,70 @@ class Base_controller extends CI_Controller {
 
 	// ------------------------------------------------------------------------
 
+	/**
+	 * Load rules
+	 * 
+	 * Detect if set of rules exists for this method
+	 * If exists, we execute the function
+	 *
+	 * @access	private
+	 * @param 	string 	Method
+	 * @return	void
+	 */
+	private function _load_rules($method)
+	{
+		$method_rules = $method . 'Rules';
+
+		// If set of rules added, execute
+		if (method_exists($this, $method_rules))
+		{
+			call_user_func(array($this, $method_rules));
+		}
+
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * Rules
+	 * 
+	 * Shortcut for $this->form_validation->set_rules() and implement 
+	 * autosanitize system
+	 *
+	 * @access	private
+	 * @param 	string 	The name of input to check
+	 * @param 	string 	Message to return if error
+	 * @param 	string 	Rules to attach
+	 * @param 	bool 	Do you want use the autosanitize system ?
+	 * @return	void
+	 */
+	public function rules($input_name, $msg, $rules='', $autosanitize = TRUE)
+	{
+		// Form validation loaded ?
+		$loaded = $this->load->is_loaded('form_validation');
+
+		if ($loaded !== FALSE)
+		{
+
+			// Auto sanitize
+			if ($autosanitize === TRUE)
+			{ 
+
+				// Avoid null and others
+				$sanitize_rules = (string) $this->sanitize_rules;
+
+				// Sanitize rules exists
+				if ( ! empty($sanitize_rules)) 
+				{
+					$rules = trim($rules, '|') . '|' . trim($this->sanitize_rules, '|');
+				}
+			}
+
+			// Enqueue rules
+			$this->$loaded->set_rules($input_name, $msg, $rules);
+		}
+
+	}
 }
 
 ?>
