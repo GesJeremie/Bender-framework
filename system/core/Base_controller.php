@@ -51,6 +51,34 @@ class Base_controller extends CI_Controller {
 	 */
 	protected $sanitize_rules = 'xss_clean|encode_php_tags|prep_for_form';
 
+	/**
+	 * Activate autoload view system ?
+	 *
+	 * @var bool
+	 */
+	protected $autoload_view = TRUE;
+
+	/**
+	 * All view datas
+	 *
+	 * @var array
+	 */
+	protected $view_datas = array();
+
+	/**
+	 * Asides to load
+	 *
+	 * @var mixed (FALSE/array)
+	 */
+	protected $asides = FALSE;
+
+	/**
+	 * Layout to load, if empty we will guess the right layout to load
+	 *
+	 * @var string
+	 */
+	protected $layout = '';
+
 	// ------------------------------------------------------------------------
 
 	public function __construct()
@@ -76,6 +104,10 @@ class Base_controller extends CI_Controller {
 
 			// Call the current method
 			call_user_func_array(array($this, $method), $params);
+
+			// Load view 
+			$this->_autoload_view($method, $params);
+
 		}
 		else 
 		{
@@ -235,6 +267,90 @@ class Base_controller extends CI_Controller {
 			// Enqueue rules
 			$this->$loaded->set_rules($input_name, $msg, $rules);
 		}
+
+	}
+
+	// ------------------------------------------------------------------------
+
+	/**
+	 * System to autoload view
+	 *
+	 * @access	private
+	 * @return	bool
+	 * 
+	 */
+	private function _autoload_view($method, $params) {
+
+		// Do you want autoload view ?
+		if ($this->autoload_view === FALSE) 
+		{
+			return FALSE;
+		}
+
+		// Guess load to view
+		$load_view = $this->router->directory . $this->router->class . '/' . $this->router->method;
+
+		// Check if view exists
+		if ( ! file_exists(APPPATH . 'views/' . $load_view . '.php'))
+		{
+			return FALSE;
+		}
+
+		// Load view into $yield and inject global view datas
+		$view_datas['yield'] = $this->load->view($load_view, $this->view_datas, TRUE);
+
+		// Do we have any asides ? Load them
+		if ($this->asides !== FALSE && ! empty($this->asides))
+		{
+
+			foreach ($this->asides as $name => $file)
+			{
+
+				// Add yield_ data
+				$view_datas['yield_' . $name] = $this->load->view($file, $this->view_datas, TRUE);
+
+			}
+
+		}
+
+		// Merge view datas
+		$view_datas = array_merge($this->view_datas, $view_datas);
+
+		// Check if autoload layout
+		if ($this->layout !== FALSE)
+		{
+
+			// No layout specify ? Ok we will try to guess it
+			if (empty($this->layout)) 
+			{
+				$this->layout = $this->router->class;
+			}
+
+			// Check if layout exists
+			if (file_exists(APPPATH . 'views/_layouts/' . $this->layout . '.php'))
+			{
+				// Load view
+				$this->load->view('_layouts/' . $this->layout, $view_datas);
+
+				return TRUE;
+			}
+
+			// Ok layout doesn't exists, try to load default layout
+			if (file_exists(APPPATH . 'views/_layouts/default.php'))
+			{
+				// Load view
+				$this->load->view('_layouts/default', $view_datas);
+
+				return TRUE;
+			}
+
+		} 
+		
+		// No layout to load, so output view directly
+		$this->output->set_output($view_datas['yield']);
+
+		return TRUE;
+		
 
 	}
 }
