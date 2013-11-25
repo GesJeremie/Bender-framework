@@ -45,13 +45,6 @@ class Base_controller extends CI_Controller {
 	protected $libs = array();
 
 	/**
-	 * List of all type requests
-	 *
-	 * @var array
-	 */
-	protected $requests = array();
-
-	/**
 	 * Base sanitize rules for auto datas validation
 	 *
 	 * @var string
@@ -74,36 +67,8 @@ class Base_controller extends CI_Controller {
 	public function _remap($method, $params) 
 	{
 
-		$accept_request = TRUE;
 
-		// Check requests
-		if ( ! empty($this->requests))
-		{
-			$request_method = $this->input->server('REQUEST_METHOD');
-
-			if (isset($this->requests[$method])) 
-			{
-				// Security
-				$this->requests[$method] = strtoupper($this->requests[$method]);
-
-				if (in_array($this->requests[$method], array('POST', 'PUT', 'GET', 'DELETE')))
-				{
-
-					// If request method added by developer
-					// isn't equal with the current method
-					if ($this->requests[$method] !== $request_method)
-					{
-						$accept_request = FALSE;
-					}
-
-				}
-
-			}
-
-
-		}
-
-		if (method_exists($this, $method) && $accept_request === TRUE)
+		if (method_exists($this, $method))
 		{
 
 			// Autoload form validation rules
@@ -157,7 +122,8 @@ class Base_controller extends CI_Controller {
 		// Models to load ?
 		if ( ! empty($this->models)) 
 		{
-			foreach ($this->models as $model) {
+			foreach ($this->models as $model) 
+			{
 
 				// Drop "_model" if added
 				$clear_model = str_replace('_model', '', $model);
