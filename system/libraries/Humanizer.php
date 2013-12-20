@@ -24,6 +24,21 @@
  */
 class CI_Humanizer {
 
+	/**
+	 * __get
+	 *
+	 * Allows Humanize to access CI's loaded classes using the same
+	 * syntax as controllers and models.
+	 *
+	 * @param	string
+	 * @access private
+	 */
+	public function __get($key)
+	{
+		$CI =& get_instance();
+		return $CI->$key;
+	}
+
 	public function __construct()
 	{
 		// Nothing here dude.
