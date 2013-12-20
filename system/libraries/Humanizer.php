@@ -31,7 +31,7 @@ class CI_Humanizer {
 	 * syntax as controllers and models.
 	 *
 	 * @param	string
-	 * @access private
+	 * @access public
 	 */
 	public function __get($key)
 	{
