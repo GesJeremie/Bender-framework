@@ -56,6 +56,17 @@ $lang['UP1275']	= '(UTC +12:45) Chatham Islands Standard Time';
 $lang['UP13']	= '(UTC +13:00) Phoenix Islands Time, Tonga';
 $lang['UP14']	= '(UTC +14:00) Line Islands';
 
+/**
+ * @package Bender Framework
+ */
+
+$lang['the'] = 'The';
+$lang['day_before_yesterday'] = 'Day before yesterday';
+$lang['yesterday'] = 'Yesterday';
+$lang['there'] = 'There are';
+$lang['instantly'] = 'Instantly';
+
+
 
 /* End of file date_lang.php */
 /* Location: ./system/language/english/date_lang.php */
