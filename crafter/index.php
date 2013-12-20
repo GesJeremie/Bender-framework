@@ -175,7 +175,6 @@ if (defined('ENVIRONMENT'))
 	// Name of the "system folder"
 	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 
-
 	// The path to the "application" folder
 	if (is_dir($application_folder))
 	{
@@ -190,6 +189,15 @@ if (defined('ENVIRONMENT'))
 
 		define('APPPATH', BASEPATH.$application_folder.'/');
 	}
+
+/*
+ * --------------------------------------------------------------------
+ * Connect crafter with your application
+ * --------------------------------------------------------------------
+ */
+
+	require_once APPPATH . 'config/share_config.php';
+
 
 /*
  * --------------------------------------------------------------------

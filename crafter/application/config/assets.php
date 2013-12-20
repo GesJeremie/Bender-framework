@@ -49,7 +49,37 @@ $assets['compress'] = array(
 | 	);
 | 
 */
-$assets['css'] = array();
+$assets['css'] = array(
+
+	array(
+
+		'name' => 'bootstrap',
+		'version' => '',
+		'src' => 'libs/bootstrap-3.0.3/css/bootstrap.css',
+		'compress' => TRUE
+
+		),
+
+	array(
+
+		'name' => 'layout',
+		'version' => '',
+		'src' => 'css/layout.css',
+		'compress' => TRUE
+
+		),
+
+	array(
+
+		'name' => 'font-awesome',
+		'version' => '',
+		'src' => 'libs/font-awesome-4.0.3/css/font-awesome.css',
+		'compress' => TRUE
+
+		),
+
+
+	);
 
 /*
 |--------------------------------------------------------------------------
@@ -75,7 +105,18 @@ $assets['css'] = array();
 | 	);
 | 
 */
-$assets['js'] = array();
+$assets['js'] = array(
+
+	array(
+
+		'name' => 'cssrefresh',
+		'version' => '',
+		'src' => 'js/cssrefresh.js',
+		'compress' => FALSE
+
+		)
+
+	);
 
 
 /* End of file assets.php */

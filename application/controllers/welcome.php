@@ -19,6 +19,8 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
+		log_message('error', 'Erreur !');
+		log_message('debug', 'Je teste pour voir si le texte marche sur une ligne vraiment très grande, je doute que ca pète mais on sait jamais');
 		$this->load->view('welcome_message');
 	}
 
