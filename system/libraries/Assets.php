@@ -599,4 +599,5 @@ class CI_Assets {
 	}
 }
 
-?>
+/* End of file Assets.php */
+/* Location: ./system/libraries/Assets.php */
