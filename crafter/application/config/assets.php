@@ -112,9 +112,27 @@ $assets['js'] = array(
 		'name' => 'cssrefresh',
 		'version' => '',
 		'src' => 'js/cssrefresh.js',
-		'compress' => FALSE
+		'compress' => TRUE
 
-		)
+		),
+
+	array(
+
+		'name' => 'bootstrap',
+		'version' => '',
+		'src' => 'libs/bootstrap-3.0.3/js/bootstrap.js',
+		'compress' => TRUE
+
+		),
+
+	array(
+
+		'name' => 'jquery',
+		'version' => '1.10.2',
+		'src' => 'libs/jquery-1.10.2/jquery.js',
+		'compress' => TRUE
+
+		),
 
 	);
 

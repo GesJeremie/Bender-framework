@@ -73,6 +73,77 @@ class Parser_logs {
 
 	}
 
+	public function find_dates() {
+
+		// Run request
+		$this->_get_datas();
+
+		// Error
+		if ($this->_datas === FALSE)
+		{
+			return FALSE;
+		}
+
+		// Init dates results
+		$dates = array();
+
+		foreach ($this->_datas as $datas)
+		{
+			// Add dates
+			$dates[] = str_replace('log-', '', $datas['name']);
+		}
+
+		// We fetched all dates, now return values
+		return $dates;
+
+	}
+
+	public function find_by_date($date)
+	{
+
+		// Run request
+		$this->_get_datas();
+
+		// Error
+		if ($this->_datas === FALSE)
+		{
+			return FALSE;
+		}
+
+		// Init date results & increment
+		$date_results = array();
+		$increment = 0;
+
+		foreach ($this->_datas as $datas)
+		{
+			$the_date = str_replace('log-', '', $datas['name']);
+
+			// Is it the same date ?
+			if ($the_date === $date)
+			{
+				foreach ($datas['datas'] as $data)
+				{
+					// Add in results date
+					$date_results[$increment] = $data;
+
+					// Where we are in the array ?
+					$increment++;
+				}
+			}
+		}
+
+
+		// No results ? Bummer ...
+		if (empty($date_results))
+		{
+			return FALSE;
+		}
+
+		// We get results, return !
+		return $date_results;
+
+	}
+
 	public function find_all() {
 
 		// Run request

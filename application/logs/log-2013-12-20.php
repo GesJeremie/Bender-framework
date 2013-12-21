@@ -38,3 +38,22 @@ DEBUG - 2013-12-20 04:46:15 --> Je teste pour voir si le texte marche sur une li
 DEBUG - 2013-12-20 04:46:15 --> File loaded: application/views/welcome_message.php
 DEBUG - 2013-12-20 04:46:15 --> Final output sent to browser
 DEBUG - 2013-12-20 04:46:15 --> Total execution time: 0.1165
+DEBUG - 2013-12-20 21:44:12 --> Config Class Initialized
+DEBUG - 2013-12-20 21:44:12 --> Hooks Class Initialized
+DEBUG - 2013-12-20 21:44:12 --> Utf8 Class Initialized
+DEBUG - 2013-12-20 21:44:12 --> UTF-8 Support Enabled
+DEBUG - 2013-12-20 21:44:13 --> URI Class Initialized
+DEBUG - 2013-12-20 21:44:14 --> Router Class Initialized
+DEBUG - 2013-12-20 21:44:14 --> No URI present. Default controller set.
+DEBUG - 2013-12-20 21:44:14 --> Output Class Initialized
+DEBUG - 2013-12-20 21:44:14 --> Security Class Initialized
+DEBUG - 2013-12-20 21:44:14 --> Input Class Initialized
+DEBUG - 2013-12-20 21:44:14 --> Global POST and COOKIE data sanitized
+DEBUG - 2013-12-20 21:44:14 --> Language Class Initialized
+DEBUG - 2013-12-20 21:44:15 --> Loader Class Initialized
+DEBUG - 2013-12-20 21:44:15 --> Controller Class Initialized
+ERROR - 2013-12-20 21:44:15 --> Erreur !
+DEBUG - 2013-12-20 21:44:15 --> Je teste pour voir si le texte marche sur une ligne vraiment très grande, je doute que ca pète mais on sait jamais
+DEBUG - 2013-12-20 21:44:15 --> File loaded: application/views/welcome_message.php
+DEBUG - 2013-12-20 21:44:15 --> Final output sent to browser
+DEBUG - 2013-12-20 21:44:15 --> Total execution time: 3.4092
