@@ -86,6 +86,21 @@ class Parser_logs {
 	// --------------------------------------------------------------------
 
 	/**
+	 * Logs folder
+	 *
+	 * Return logs path
+	 *
+	 * @access	public
+	 * @return	int
+	 */
+	public function logs_folder()
+	{
+		return $this->_logs_folder;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
 	 * Find dates
 	 *
 	 * Find all logs dates
