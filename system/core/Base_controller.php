@@ -98,9 +98,12 @@ class Base_controller extends CI_Controller {
 
 		if (method_exists($this, $method))
 		{
+			log_message('info', 'Base_Controller : Method ' . $method . '() exists');
 
 			// Autoload form validation rules
 			$this->_load_rules($method);
+
+			log_message('info', 'Base_Controller : Execute ' . $method . '()');
 
 			// Call the current method
 			call_user_func_array(array($this, $method), $params);
@@ -111,13 +114,19 @@ class Base_controller extends CI_Controller {
 		}
 		else 
 		{
+			log_message('info', 'Base_Controller : Method ' . $method . '() doesn\'t exists');
+
 			// Check if method "_404()" added by the developer
 			if (method_exists($this, '_404'))
 			{
+				log_message('info', 'Base_Controller : Execute method _404()');
+
 				call_user_func(array($this, '_404'));
 			} 
 			else 
 			{
+				log_info('info', 'Base_Controller : No custom _404() method found, so execute show_404() of CodeIgniter');
+
 				show_404(strtolower(get_class($this)) . '/' . $method);
 			}
 		}
@@ -136,6 +145,8 @@ class Base_controller extends CI_Controller {
 	 */
 	private function _loader() 
 	{
+
+		log_message('info', 'Base_Controller : Try to autoload helpers, models and libraries found in the loader system of the controller');
 
 		// Helpers to load ?
 		if ( ! empty($this->helpers)) 
@@ -219,10 +230,17 @@ class Base_controller extends CI_Controller {
 	{
 		$method_rules = $method . 'Rules';
 
+		log_message('info', 'Base_Controller : Try to load ' . $method_rules . '() to autoload rules');
+
 		// If set of rules added, execute
 		if (method_exists($this, $method_rules))
 		{
+			log_message('info', 'Base_Controller : ' . $method_rules . '() found, we will execute the method');
 			call_user_func(array($this, $method_rules));
+		}
+		else
+		{
+			log_message('info', 'Base_Controller : ' . $method_rules . '() doesn\'t exists so no rules to load');
 		}
 
 	}
@@ -249,6 +267,7 @@ class Base_controller extends CI_Controller {
 
 		if ($loaded !== FALSE)
 		{
+			log_message('info', 'Base_Controller : Form_validation library loaded, so we will add rules');
 
 			// Auto sanitize
 			if ($autosanitize === TRUE)
@@ -264,8 +283,14 @@ class Base_controller extends CI_Controller {
 				}
 			}
 
+			log_message('info', 'Base_Controller : Add rules ' . $rules . ' for input name : ' . $input_name);
+
 			// Enqueue rules
 			$this->$loaded->set_rules($input_name, $msg, $rules);
+		}
+		else
+		{
+			log_message('info', 'Base_Controller : Form_validation library not loaded, so we will not add rules');
 		}
 
 	}
@@ -284,6 +309,8 @@ class Base_controller extends CI_Controller {
 		// Do you want autoload view ?
 		if ($this->autoload_view === FALSE) 
 		{
+			log_message('info', 'Base_Controller : Developer avoid the autoload view system');
+
 			return FALSE;
 		}
 
@@ -293,8 +320,11 @@ class Base_controller extends CI_Controller {
 		// Check if view exists
 		if ( ! file_exists(APPPATH . 'views/' . $load_view . '.php'))
 		{
+			log_message('info', 'Base_Controller : ' . APPPATH . 'views/' . $load_view . '.php doesn\'t exists, so we don\'t autoload the view');
 			return FALSE;
 		}
+
+		log_message('info', 'Base_Controller : We load view ' . $load_view . ' and inject datas into $yield');
 
 		// Load view into $yield and inject global view datas
 		$view_datas['yield'] = $this->load->view($load_view, $this->view_datas, TRUE);
@@ -305,12 +335,17 @@ class Base_controller extends CI_Controller {
 
 			foreach ($this->asides as $name => $file)
 			{
+				log_message('info', 'Base_Controller : We load aside ' . $file . ' and inject into $yield_' . $name);
 
 				// Add yield_ data
 				$view_datas['yield_' . $name] = $this->load->view($file, $this->view_datas, TRUE);
 
 			}
 
+		}
+		else
+		{
+			log_message('info', 'Base_Controller : No asides to load');
 		}
 
 		// Merge view datas
@@ -319,16 +354,23 @@ class Base_controller extends CI_Controller {
 		// Check if autoload layout
 		if ($this->layout !== FALSE)
 		{
+			log_message('info', 'Base_Controller : Developer wants use the autoload layout system');
 
 			// No layout specify ? Ok we will try to guess it
 			if (empty($this->layout)) 
 			{
+				log_message('info', 'Base_Controller : No layout specified, so we will auto-guess');
+
 				$this->layout = $this->router->class;
+
+				log_message('info', 'Base_Controller : Layout guessed -> ' . $this->layout);
 			}
 
 			// Check if layout exists
 			if (file_exists(APPPATH . 'views/_layouts/' . $this->layout . '.php'))
 			{
+				log_message('info', 'Base_Controller : Layout exists');
+
 				// Load view
 				$this->load->view('_layouts/' . $this->layout, $view_datas);
 
@@ -338,13 +380,23 @@ class Base_controller extends CI_Controller {
 			// Ok layout doesn't exists, try to load default layout
 			if (file_exists(APPPATH . 'views/_layouts/default.php'))
 			{
+
+				log_message('info', 'Base_Controller : Layout doesn\'t exists, so we will try to load the default layout -> _layouts/default.php');
+
 				// Load view
 				$this->load->view('_layouts/default', $view_datas);
 
 				return TRUE;
 			}
 
-		} 
+		}
+		else
+		{
+			log_message('info', 'Base_Controller : Developer avoid the autoload layout system');
+
+		}
+		
+		log_message('info', 'Base_Controller : No layout to load, so output view directly');
 		
 		// No layout to load, so output view directly
 		$this->output->set_output($view_datas['yield']);
