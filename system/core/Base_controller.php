@@ -125,7 +125,7 @@ class Base_controller extends CI_Controller {
 			} 
 			else 
 			{
-				log_info('info', 'Base_Controller : No custom _404() method found, so execute show_404() of CodeIgniter');
+				log_message('info', 'Base_Controller : No custom _404() method found, so execute show_404() of CodeIgniter');
 
 				show_404(strtolower(get_class($this)) . '/' . $method);
 			}
@@ -397,7 +397,7 @@ class Base_controller extends CI_Controller {
 		}
 		
 		log_message('info', 'Base_Controller : No layout to load, so output view directly');
-		
+
 		// No layout to load, so output view directly
 		$this->output->set_output($view_datas['yield']);
 
