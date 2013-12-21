@@ -62,17 +62,12 @@ class CI_Humanizer {
 			return FALSE;
 		}
 
-		// Check type datas
-		if ( ! is_array($datas))
-		{
-			return FALSE;
-		}
 
 		// Init humanize
 		$humanize = array();
 
-		// Check if we must loop array or not
-		if ($this->_is_multi_array($datas))
+		// Check if is it an array and if we must loop array or not
+		if (is_array($datas) && $this->_is_multi_array($datas))
 		{
 			foreach ($datas as $data)
 			{
