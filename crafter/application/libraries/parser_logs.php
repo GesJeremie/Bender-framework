@@ -21,10 +21,37 @@
  */
 class Parser_logs {
 
+	/**
+	 * Stock path of logs folder
+	 *
+	 * @var string
+	 */
 	private $_logs_folder = '';
+
+	/**
+	 * Stock all files fetched in the logs directory
+	 *
+	 * @var array
+	 */
 	private $_files = array();
+
+	/**
+	 * All datas filled by generic method _get_datas()
+	 *
+	 * @var array
+	 */
 	private $_datas = array();
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Constructor
+	 *
+	 * Find where is the logs folder in the base application
+	 * and fetch all files
+	 *
+	 * @access	public
+	 */
 	public function __construct() 
 	{
 
@@ -39,33 +66,16 @@ class Parser_logs {
 
 	}
 
-	private function _find_logs_folder() 
-	{
+	// --------------------------------------------------------------------
 
-		// Path of config file
-		$config_file = APP_APPPATH . 'config/config.php';
-
-		// Require file to fetch $config datas
-		require($config_file);
-
-		// Get log path
-		if (empty($config['log_path'])) {
-
-			$log_path = APP_APPPATH . 'logs/';
-
-
-		} else {
-
-			$log_path = $config['log_path'];
-		}
-
-		// Unset useless datas
-		unset($config);
-
-		return $log_path;
-
-	}
-
+	/**
+	 * Count files
+	 *
+	 * Count all logs files fetched
+	 *
+	 * @access	public
+	 * @return	int
+	 */
 	public function count_files() 
 	{
 
@@ -73,6 +83,16 @@ class Parser_logs {
 
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Find dates
+	 *
+	 * Find all logs dates
+	 *
+	 * @access	public
+	 * @return	mixed 	bool/array
+	 */
 	public function find_dates() {
 
 		// Run request
@@ -98,6 +118,17 @@ class Parser_logs {
 
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Find by date
+	 *
+	 * Find all logs by specific date
+	 *
+	 * @access	public
+	 * @param	string 	Catch only files with this date (Ex. 2013-12-20)
+	 * @return	bool 	bool/array
+	 */
 	public function find_by_date($date)
 	{
 
@@ -144,6 +175,16 @@ class Parser_logs {
 
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Find all
+	 *
+	 * Find all logs
+	 *
+	 * @access	public
+	 * @return	bool 	bool/array
+	 */
 	public function find_all() {
 
 		// Run request
@@ -176,6 +217,53 @@ class Parser_logs {
 		
 	}
 
+	// --------------------------------------------------------------------
+
+	/**
+	 * Find logs folder
+	 *
+	 * Find where is the log folder
+	 *
+	 * @access	private
+	 * @return	string 	The absolute log path
+	 */
+	private function _find_logs_folder() 
+	{
+
+		// Path of config file
+		$config_file = APP_APPPATH . 'config/config.php';
+
+		// Require file to fetch $config datas
+		require($config_file);
+
+		// Get log path
+		if (empty($config['log_path'])) {
+
+			$log_path = APP_APPPATH . 'logs/';
+
+
+		} else {
+
+			$log_path = $config['log_path'];
+		}
+
+		// Unset useless datas
+		unset($config);
+
+		return $log_path;
+
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Get datas
+	 *
+	 * Generic method, fetch all logs 
+	 *
+	 * @access	private
+	 * @return	bool 	bool/array
+	 */
 	private function _get_datas() 
 	{
 
@@ -210,7 +298,7 @@ class Parser_logs {
 
 				if ( ! empty($line))
 				{
-					$results[$key]['datas'][] = $this->parse_line($line);
+					$results[$key]['datas'][] = $this->_parse_line($line);
 				}
 
 			}
@@ -226,8 +314,19 @@ class Parser_logs {
 		$this->_datas = $results;
 
 	}
+	
+	// --------------------------------------------------------------------
 
-	public function parse_line($line)
+	/**
+	 * Parse line
+	 *
+	 * Parse log line and retrieve datas
+	 *
+	 * @access	public
+	 * @param	string 	Line to parse
+	 * @return	string 	Line parsed
+	 */
+	private function _parse_line($line)
 	{
 
 		// Get the label
@@ -262,4 +361,5 @@ class Parser_logs {
 
 }
 
-?>
+/* End of file Parser_logs.php */
+/* Location: ./application/libraries/Parser_logs.php */
