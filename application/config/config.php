@@ -61,6 +61,42 @@ $config['url_suffix'] = '';
 
 /*
 |--------------------------------------------------------------------------
+| Security required params
+|--------------------------------------------------------------------------
+|
+| This option allows the system to check if you get all required params
+| to execute the method of controller.
+|
+| Example controller :
+|
+| class Logs extends CI_Controller {
+|
+| 	public function __construct() 
+| 	{
+| 		parent::__construct();
+| 	}
+|
+| 	public function delete($date)
+|  	{
+|  		// Cook here
+|	}
+| }
+| 
+| In the delete() method, $date required.
+|
+| If you execute request like : http://www.example.com/logs/delete/
+| without params, you will get a PHP error.
+|
+| Note : Keep in mind, the app user can edit as he want the browser url
+|
+| Just put TRUE for this option and the system display 404 error than PHP
+| error.
+|
+*/
+$config['check_required_params'] = TRUE;
+
+/*
+|--------------------------------------------------------------------------
 | Default Language
 |--------------------------------------------------------------------------
 |

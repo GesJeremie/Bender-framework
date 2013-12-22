@@ -357,9 +357,43 @@
 			}
 		}
 
-		// Call the requested method.
-		// Any URI segments present (besides the class/function) will be passed to the method for convenience
-		call_user_func_array(array(&$CI, $method), array_slice($URI->rsegments, 2));
+		// Get and slice params
+		$params = array_slice($URI->rsegments, 2);
+
+		// Developer wants check required params before execute method ?
+		if ($CFG->item('check_required_params') === TRUE)
+		{
+			log_message('debug', 'Check required params to execute method ' . $method . '()');
+
+			// New reflection method
+			$reflection = new ReflectionMethod($CI, $method);
+
+			// Get number of required params
+			$required_params = $reflection->getNumberOfRequiredParameters();
+
+			
+			// Can we call the func ?
+			if (count($params) >= $required_params)
+			{
+				// Call the requested method.
+				// Any URI segments present (besides the class/function) will be passed to the method for convenience
+				call_user_func_array(array(&$CI, $method), $params);
+			}
+			else
+			{
+				// Problem with nb params, so show_404()
+				show_404();
+
+			}
+		} 
+		else
+		{
+			// Call the requested method.
+			// Any URI segments present (besides the class/function) will be passed to the method for convenience
+			call_user_func_array(array(&$CI, $method), $params);			
+		}
+
+
 	}
 
 
