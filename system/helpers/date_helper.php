@@ -670,7 +670,7 @@ if ( ! function_exists('elapsed_time_human'))
 		{
 			return $CI->lang->line('there') . ' ' . $seconds . ' s';
 		}
-
+	}
 }
 
 
