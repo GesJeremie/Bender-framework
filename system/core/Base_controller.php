@@ -105,35 +105,75 @@ class Base_controller extends CI_Controller {
 
 			log_message('info', 'Base_Controller : Execute ' . $method . '()');
 
-			// Call the current method
-			call_user_func_array(array($this, $method), $params);
 
-			// Load view 
-			$this->_autoload_view($method, $params);
+			// Developer wants check required params before execute method ?
+			if ($this->config->item('check_required_params') === TRUE)
+			{
+
+				log_message('debug', 'Base_Controller : Check required params to execute method ' . $method . '()');
+
+				// New reflection method
+				$reflection = new ReflectionMethod($this, $method);
+
+				// Get number of required params
+				$required_params = $reflection->getNumberOfRequiredParameters();
+
+				// Can we call the func ?
+				if (count($params) >= $required_params)
+				{					
+					// Call the requested method.
+					// Any URI segments present (besides the class/function) will be passed to the method for convenience
+					call_user_func_array(array(&$this, $method), $params);
+
+					// Load view 
+					$this->_autoload_view($method, $params);	
+				}
+				else
+				{
+					// Problem with nb params, so load 404 system
+					$this->_load_404($method);
+				}
+			} 
+			else
+			{	
+				// Developper doesn't check required params, exec directly
+
+				// Call the current method
+				call_user_func_array(array(&$this, $method), $params);
+
+				// Load view 
+				$this->_autoload_view($method, $params);	
+			}
 
 		}
 		else 
 		{
 			log_message('info', 'Base_Controller : Method ' . $method . '() doesn\'t exists');
 
-			// Check if method "_404()" added by the developer
-			if (method_exists($this, '_404'))
-			{
-				log_message('info', 'Base_Controller : Execute method _404()');
-
-				call_user_func(array($this, '_404'));
-			} 
-			else 
-			{
-				log_message('info', 'Base_Controller : No custom _404() method found, so execute show_404() of CodeIgniter');
-
-				show_404(strtolower(get_class($this)) . '/' . $method);
-			}
 		}
 
 	}
 
 	// ------------------------------------------------------------------------
+
+	private function _load_404($method)
+	{
+
+		// Check if method "_404()" added by the developer
+		if (method_exists($this, '_404'))
+		{
+			log_message('info', 'Base_Controller : Execute method _404()');
+
+			call_user_func(array(&$this, '_404'), $method);
+		} 
+		else 
+		{
+			log_message('info', 'Base_Controller : No custom _404() method found, so execute show_404() of CodeIgniter');
+
+			show_404(strtolower(get_class($this)) . '/' . $method);
+		}
+
+	}
 
 	/**
 	 * Loader
