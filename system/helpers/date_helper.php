@@ -616,60 +616,63 @@ if ( ! function_exists('timezones'))
  * @return	string
  * 
  */
-function elapsed_time_human($date) {
+if ( ! function_exists('elapsed_time_human'))
+{
+	function elapsed_time_human($date) {
 
-	// Load instance CI
-	$CI =& get_instance();
+		// Load instance CI
+		$CI =& get_instance();
 
-	// Load file date
-	$CI->lang->load('date');
+		// Load file date
+		$CI->lang->load('date');
 
-	// To undersand the code
-	$old_time = $date;
-	
-	// Current time
-	$time = time();
+		// To undersand the code
+		$old_time = $date;
+		
+		// Current time
+		$time = time();
 
-	// Get seconds elapsed
-	$seconds = round($time - $old_time);
+		// Get seconds elapsed
+		$seconds = round($time - $old_time);
 
-	// Convert into minutes
-	$minutes = round($seconds/60);
+		// Convert into minutes
+		$minutes = round($seconds/60);
 
-	// Convert into hours
-	$hours = round($minutes/60);
+		// Convert into hours
+		$hours = round($minutes/60);
 
-	// Returns
-	if ($hours >= 72)
-	{
-		return $CI->lang->line('the') . ' ' . date('d/m/Y', $old_time);
-	} 
-	elseif ($hours >= 48 && $hours < 72)
-	{
-		return $CI->lang->line('day_before_yesterday');
-	} 
-	elseif ($hours >= 24 && $hours < 48)
-	{
-		return $CI->lang->line('yesterday');
-	} 
-	elseif ($hours >= 1) 
-	{
-		return $CI->lang->line('there') . ' ' . $hours . ' h';
-	}
-	elseif ($minutes >= 1)
-	{
-		return $CI->lang->line('there') . ' ' . $minutes . ' mn';
-	}
-	elseif ($seconds == 0)
-	{
-		return $CI->lang->line('instantly');
-	}
-	else
-	{
-		return $CI->lang->line('there') . ' ' . $seconds . ' s';
-	}
+		// Returns
+		if ($hours >= 72)
+		{
+			return $CI->lang->line('the') . ' ' . date('d/m/Y', $old_time);
+		} 
+		elseif ($hours >= 48 && $hours < 72)
+		{
+			return $CI->lang->line('day_before_yesterday');
+		} 
+		elseif ($hours >= 24 && $hours < 48)
+		{
+			return $CI->lang->line('yesterday');
+		} 
+		elseif ($hours >= 1) 
+		{
+			return $CI->lang->line('there') . ' ' . $hours . ' h';
+		}
+		elseif ($minutes >= 1)
+		{
+			return $CI->lang->line('there') . ' ' . $minutes . ' mn';
+		}
+		elseif ($seconds == 0)
+		{
+			return $CI->lang->line('instantly');
+		}
+		else
+		{
+			return $CI->lang->line('there') . ' ' . $seconds . ' s';
+		}
 
 }
+
 
 
 /* End of file date_helper.php */
