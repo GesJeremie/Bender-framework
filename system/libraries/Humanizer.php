@@ -62,7 +62,11 @@ class CI_Humanizer {
 			return FALSE;
 		}
 
-
+		if ($datas === FALSE)
+		{
+			return FALSE;
+		}
+		
 		// Init humanize
 		$humanize = array();
 
