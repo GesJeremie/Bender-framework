@@ -167,6 +167,24 @@ class CI_Session  {
 	}
 
 	/**
+	 * Get value of key / filter and forget key/value just after
+	 *
+	 * @access	public
+	 * @return	mixed
+	 */
+	public function flash($key, $filter='_default')
+	{
+
+		$response = $this->get($key, $filter);
+
+		// Forget data
+		$this->forget($key, $filter);
+
+		return $response;
+
+	}
+
+	/**
 	 * Show all current sessions
 	 *
 	 * @access	public
