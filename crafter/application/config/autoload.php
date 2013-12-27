@@ -64,7 +64,7 @@ $autoload['libraries'] = array('assets', 'humanizer');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('assets');
+$autoload['helper'] = array('assets', 'css_helper');
 
 
 /*
@@ -80,7 +80,7 @@ $autoload['helper'] = array('assets');
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('app');
 
 
 /*

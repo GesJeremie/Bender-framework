@@ -2,8 +2,6 @@
 
 class Dashboard extends Base_Controller {
 
-	protected $libs = array('session');
-
 	public function __construct() 
 	{
 		parent::__construct();
@@ -15,12 +13,8 @@ class Dashboard extends Base_Controller {
 
 	}
 
-	public function log_in()
-	{
-		
-	}
 
 }
 
-/* End of file Dashboard.php */
+/* End of file dashboard.php */
 /* Location: ./application/controllers/dashboard.php */

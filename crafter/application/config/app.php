@@ -13,5 +13,7 @@
 | 
 */
 
+$config['app_version'] = '0.1';
+
 /* End of file app.php */
 /* Location: ./application/config/app.php */

@@ -2,7 +2,7 @@
 
 class Logs extends Base_Controller {
 
-	protected $libs = array('parser_logs', 'humanize_logs');
+	protected $libs = array('parser_logs', 'humanize_logs', 'session');
 
 	public function __construct() 
 	{
@@ -10,7 +10,7 @@ class Logs extends Base_Controller {
 	}
 
 	public function index()
-	{
+	{		
 		// Get datas
 		$logs = $this->parser_logs->find_all();
 		$dates = $this->parser_logs->find_dates();
@@ -20,8 +20,13 @@ class Logs extends Base_Controller {
 		$dates = $this->humanize_logs->run($dates, 'dates');
 
 		// Inject in view
-		$this->view_datas['logs'] = $logs;
-		$this->view_datas['dates'] = $dates;
+		$this->view_datas = array(
+
+			'logs' => $logs,
+			'dates' => $dates
+
+			);
+
 	}
 
 	public function dates($date)
@@ -36,16 +41,34 @@ class Logs extends Base_Controller {
 		$header_date = $this->humanize_logs->run($date, 'header_date');
 		
 		// Inject in view
-		$this->view_datas['header_date'] = $header_date;
-		$this->view_datas['logs'] = $logs;
-		$this->view_datas['dates'] = $dates;
+		$this->view_datas = array(
 
+			'path_log' => $this->parser_logs->logs_folder(),
+			'get_date' => $date,
+			'header_date' => $header_date,
+			'logs' => $logs,
+			'dates' => $dates
+
+			);
 
 	}
+
+	public function delete($date)
+	{
+		// Try to delete file
+		$deleted = $this->parser_logs->delete($date);
+
+		// Put session
+		$this->session->put('deleted_file', $deleted);
+
+		// Redirect
+		redirect('logs/index');
+	}
+
 
 
 
 }
 
-/* End of file welcome.php */
-/* Location: ./application/controllers/welcome.php */
+/* End of file logs.php */
+/* Location: ./application/controllers/logs.php */

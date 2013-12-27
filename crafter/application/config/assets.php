@@ -134,6 +134,15 @@ $assets['js'] = array(
 
 		),
 
+	array(
+
+		'name' => 'main',
+		'version' => '',
+		'src' => 'js/main.js',
+		'compress' => TRUE
+
+		)
+
 	);
 
 

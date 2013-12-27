@@ -13,8 +13,6 @@ class Humanize_logs extends CI_Humanizer {
 
 	public function logs($datas)
 	{	
-		// Css classes
-
 		// Colors for label - Don't remove default index !
 		$css_labels = array('default' => '', 'error' => 'label-danger', 'debug' => 'label-default', 'info' => 'label-info');
 
@@ -34,7 +32,7 @@ class Humanize_logs extends CI_Humanizer {
 
 		// Add in datas
 		$datas['css_label'] = $css_label;
-		$datas['date_fr'] = date('d M Y - H:i:s', $datas['date_timestamp']);
+		$datas['date_human'] = date('M d Y - H:i:s', $datas['date_timestamp']);
 		$datas['label'] = $this->lang->line($label);
 
 
@@ -50,7 +48,7 @@ class Humanize_logs extends CI_Humanizer {
 		{	
 			// Get timestamp
 			$timestamp = strtotime($date);
-			$results[$key]['date_human'] = date('d M Y', $timestamp);
+			$results[$key]['date_human'] = date('M d Y', $timestamp);
 			$results[$key]['date_raw'] = $date;
 		}
 
@@ -61,7 +59,9 @@ class Humanize_logs extends CI_Humanizer {
 	{
 		// Get timestamp 
 		$timestamp = strtotime($date);
-		$header_date = date('d M Y', $timestamp);
+
+		// Format
+		$header_date = date('M d Y', $timestamp);
 
 		return $header_date;
 
@@ -69,3 +69,7 @@ class Humanize_logs extends CI_Humanizer {
 
 
 }
+
+
+/* End of file Humanize_logs.php */
+/* Location: ./application/libraries/Humanize_logs.php */

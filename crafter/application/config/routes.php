@@ -41,6 +41,9 @@
 $route['default_controller'] = 'dashboard';
 $route['404_override'] = '';
 
+$route['voir-les-logs'] = 'logs/index';
+$route['log-de-la-date-(:num)'] = 'logs/dates/$1';
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

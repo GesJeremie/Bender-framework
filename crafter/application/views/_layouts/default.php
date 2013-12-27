@@ -2,10 +2,10 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Dashboard</title>
+  <title>Tableau de bord</title>
 
   <?= stylesheet_include_tag('bootstrap', 'font-awesome', 'layout') ?>
-  <?= javascript_include_tag('cssrefresh', 'jquery', 'bootstrap') ?>
+  <?= javascript_include_tag('cssrefresh', 'jquery', 'bootstrap', 'main') ?>
   
 </head>
 <body>
@@ -15,19 +15,12 @@
 
 		<div class="container">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Crafter</a>
+				<a class="navbar-brand" href="<?= site_url() ?>">Crafter</a>
 			</div>
 
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#"><i class="fa fa-tasks"></i> Logs</a></li>
-					<li><a href="#"><i class="fa fa-terminal"></i> Cmd</a></li>
-					<li><a href="#"><i class="fa fa-tint"></i> Assets</a></li>
-					<li><a href="#"><i class="fa fa-cogs"></i> Configuration</a></li>
-				</ul>
-
-				<ul class="nav navbar-nav navbar-right">
-					<li><a href="#"><i class="fa fa-unlock"></i></a></li>
+					<li class="<?= menu_active('logs') ?>"><a href="<?= site_url('logs') ?>"><i class="fa fa-tasks"></i> Logs</a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div>
@@ -35,6 +28,7 @@
 	<!-- /Sidebar -->
 
 	<?= $yield ?>
-	
+
+
 </body>
 </html>

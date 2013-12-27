@@ -200,7 +200,8 @@ class Parser_logs {
 	 * @access	public
 	 * @return	bool 	bool/array
 	 */
-	public function find_all() {
+	public function find_all() 
+	{
 
 		// Run request
 		$this->_get_datas();
@@ -230,6 +231,47 @@ class Parser_logs {
 
 		return $results;
 		
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Delete
+	 *
+	 * Delete file by date
+	 *
+	 * @access	public
+	 * @return	bool
+	 */
+	public function delete($date)
+	{
+
+		foreach ($this->_files as $file)
+		{
+			// Get the date
+			$the_date = str_replace($this->_logs_folder . 'log-', '', $file);
+
+			// Drop ".php"
+			$the_date = substr($the_date, 0, -4);
+			
+			// Find the date !
+			if ($date === $the_date)
+			{
+				// Check if file exists
+				if (file_exists($file))
+				{
+					// Delete !
+					unlink($file);
+
+					return TRUE;
+				}
+			}
+
+		}
+
+		// Bummer ...
+		return FALSE;
+
 	}
 
 	// --------------------------------------------------------------------
