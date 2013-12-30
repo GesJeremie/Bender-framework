@@ -55,6 +55,14 @@
   .spacer200 { height: 200px; width: 100%; font-size: 0; margin: 0; padding: 0; border: 0; display: block; }
 
 
+  }
+
+
+.form-control:focus {
+  border-color: red !important;
+  outline: 0;
+
+}
 
 
 /* #Page Styles

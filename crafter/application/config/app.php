@@ -14,6 +14,7 @@
 */
 
 $config['app_version'] = '0.1';
+$config['reserved_routes'] = array('default_controller', '404_override');
 
 /* End of file app.php */
 /* Location: ./application/config/app.php */

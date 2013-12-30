@@ -21,6 +21,7 @@
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li class="<?= menu_active('logs') ?>"><a href="<?= site_url('logs') ?>"><i class="fa fa-tasks"></i> Logs</a></li>
+					<li class="<?= menu_active('config') ?>"><a href="<?= site_url('config') ?>"><i class="fa fa-cog"></i> Config</a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div>
