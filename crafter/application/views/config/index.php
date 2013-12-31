@@ -53,54 +53,57 @@
 	</div>
 
 
-<div class="panel panel-default">
-  <!-- Default panel contents -->
-  <div class="panel-heading">
-  	<h3 class="panel-title">All available routes</h3>
-  	</div>
-	
-	<? if ($this->session->get('delete_reserved_route', 'config')): ?>
-		<div class="alert alert-danger"><?= $this->session->flash('delete_reserved_route', 'config') ?></div>
-	<? endif; ?>
+	<div class="panel panel-default">
+	  <!-- Default panel contents -->
+	  <div class="panel-heading">
+	  	<h3 class="panel-title">All available routes</h3>
+	  	</div>
+		
+		<? if ($this->session->get('delete_reserved_route', 'config')): ?>
+			<div class="alert alert-danger"><?= $this->session->flash('delete_reserved_route', 'config') ?></div>
+		<? endif; ?>
 
-  <div class="spacer10"></div>
+	  <div class="spacer10"></div>
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Rewrite</th>
-				<th>Execute</th>
-				<th>Actions</th>
-			</tr>
-		</thead>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Rewrite</th>
+					<th>Execute</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
 
-		<tbody>
-			<? foreach ($routes as $pattern => $route): ?>
+			<tbody>
+				<? foreach ($routes as $pattern => $route): ?>
 
-			<tr>
-				<td><?= $pattern ?></td>
-				<td><?= $route ?></td>
+				<tr>
+					<td><?= $pattern ?></td>
+					<td><?= $route ?></td>
 
 
-				<? if (in_array($pattern, array('default_controller', '404_override'))): ?>
-					<td><a class="btn btn-danger" disabled="disabled"><i class="fa fa-trash-o"></i> Delete</a></td>
-				<? else: ?>
-					<td>
+					<? if (in_array($pattern, array('default_controller', '404_override'))): ?>
+						<td><a class="btn btn-danger" disabled="disabled"><i class="fa fa-trash-o"></i> Delete</a></td>
+					<? else: ?>
+						<td>
 
-						<form method="post" action="<?= site_url('config/delete_route') ?>">
-							<input type="hidden" name="pattern" value="<?= $pattern ?>" />
-							<button type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i> Delete</button>
-						</form>
+							<form method="post" action="<?= site_url('config/delete_route') ?>">
+								<input type="hidden" name="pattern" value="<?= $pattern ?>" />
+								<button type="submit" class="btn btn-danger"><i class="fa fa-trash-o"></i> Delete</button>
+							</form>
 
-					</td>
-				<? endif; ?>
+						</td>
+					<? endif; ?>
 
-			</tr>
+				</tr>
 
-			<? endforeach; ?>
-	</tbody>
-</table>
-</div>
+				<? endforeach; ?>
+		</tbody>
+	</table>
+	</div>
+
+	<div class="page-header"><h1>Database</h1></div>
+
 
 
 

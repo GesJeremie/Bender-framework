@@ -12,7 +12,7 @@ class Config extends Base_Controller {
 
 	public function index()
 	{
-
+		
 		$environment = $this->app_config->environment();
 		$routes = $this->app_config->get_routes();
 
