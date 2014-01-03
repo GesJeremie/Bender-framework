@@ -150,6 +150,8 @@ class Base_controller extends CI_Controller {
 		{
 			log_message('info', 'Base_Controller : Method ' . $method . '() doesn\'t exists');
 
+			$this->_load_404($method);
+
 		}
 
 	}
@@ -193,10 +195,6 @@ class Base_controller extends CI_Controller {
 		{
 			foreach ($this->helpers as $helper) 
 			{
-				// Drop "_helper" if added
-				$clear_helper = str_replace('_helper', '', $helper);
-				$helper = $clear_helper . '_helper';
-
 				// Load the helper
 				$this->load->helper($helper);
 			}
@@ -207,10 +205,10 @@ class Base_controller extends CI_Controller {
 		{
 			foreach ($this->models as $model) 
 			{
+				// Security 
+				$clear_model = strtolower($model);
 
-				// Drop "_model" if added
-				$clear_model = str_replace('_model', '', $model);
-				$model = $clear_model . '_model';
+				$model = ucfirst($clear_model) . '_model';
 
 				// Load the model
 				$this->load->model($model, $clear_model);
@@ -223,11 +221,15 @@ class Base_controller extends CI_Controller {
 		{
 			foreach ($this->libs as $lib) 
 			{
-				if ($lib == 'dbutil') 
+				if ($lib === 'database' OR $lib === 'db')
+				{
+					$this->load->database();
+				}
+				elseif ($lib === 'dbutil') 
 				{
 					$this->load->dbutil();
 				} 
-				elseif ($lib == 'dbforge')
+				elseif ($lib === 'dbforge')
 				{
 					$this->load->dbforge();
 				}
