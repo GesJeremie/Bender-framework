@@ -102,9 +102,4 @@
 	</table>
 	</div>
 
-	<div class="page-header"><h1>Database</h1></div>
-
-
-
-
 </div>

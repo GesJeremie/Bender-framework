@@ -5,8 +5,8 @@
 
 	<div class="page-header"><h1>Crafter v0.1 <small>Your favorite tool to manage your application</small></h1></div>
 
-	<p>Crafter is a simple tool to manage your web application built with Bender Framework. In this current version (v<?= $this->config->item('app_version') ?>), you can manage your logs and edit the configuration
-		of your application.</p>
+	<p>Crafter is a simple tool to manage your web application built with Bender Framework. In this current version (v<?= $this->config->item('app_version') ?>), you can manage your logs, edit the configuration
+		of your application and auto-generate skeleton codes.</p>
 
 		<div class="spacer30"></div>
 
@@ -25,8 +25,15 @@
 					<tr>
 						<td>Configuration</td>
 						<td>Edit configuration of your web application (database, routes, etc. )</td>
-						<td><a href="#" class="btn btn-primary">Start</a></td>
+						<td><a href="<?= site_url('config') ?>" class="btn btn-primary">Start</a></td>
 					</tr>
+
+					<tr>
+						<td>Skeleton</td>
+						<td>Auto-generate skeleton codes</td>
+						<td><a href="<?= site_url('skeleton') ?>" class="btn btn-primary">Start</a></td>
+					</tr>
+
 				</tbody>
 			</table>
 		</div>
