@@ -52,9 +52,10 @@ $active_record = TRUE;
 $db['development'] = array(
 
 	'hostname' => 'localhost',
-	'username' => '',
-	'database' => '',
-	'dbdriver' => '',
+	'username' => 'root',
+	'password' => 'A2Pm3yJzJHRV9BXb',
+	'database' => 'bender_framework',
+	'dbdriver' => 'mysql',
 	'dbprefix' => '',
 	'pconnect' => TRUE,
 	'db_debug' => TRUE,
