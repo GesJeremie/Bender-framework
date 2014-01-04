@@ -23,10 +23,29 @@
  */
 class Base_model extends CI_Model {
 
+	/**
+	 * Name of the current model used
+	 * Filled by constructor method
+	 *
+	 * @var string
+	 */
 	private $_name_model;
 
+	/**
+	 * Do you want use auto timestamp system ?
+	 * The system will add created_at and/or updated_at
+	 * field data when you perform request like save() or update()
+	 *
+	 * @var string
+	 */
 	private $_auto_timestamp = TRUE;
 
+	/**
+	 * Do you want add suffix for your datas when you 
+	 * perform request like save() or update()
+	 *
+	 * @var string
+	 */
 	protected $_suffix_label;
 
 	/**
@@ -60,14 +79,13 @@ class Base_model extends CI_Model {
 	 */
 	private $_return_methods = array(
 
-		'result' => array('object' => 'result', 	'array' => 'result_array'),
-		'first'  => array('object' => '',       	'array' => 'array'),
-		'last'   => array('object' => '',       	'array' => 'array')
+		'result' => array('object' => 'result',  'array' => 'result_array'),
+		'first'  => array('object' => 'object',  'array' => 'array'),
+		'last'   => array('object' => 'object',  'array' => 'array')
 
 		);
 
 	// --------------------------------------------------------------------
-
 
 	public function __construct()
 	{
@@ -77,9 +95,9 @@ class Base_model extends CI_Model {
 
 		$this->_fetch_return_type();
 
-		$this->_fetch_primary_key();
-
 		$this->_fetch_suffix_label();
+
+		$this->_fetch_primary_key();
 
 		// Used by save() and update() methods
 		$this->load->helper('date');
@@ -87,7 +105,20 @@ class Base_model extends CI_Model {
 	}
 
 	// --------------------------------------------------------------------
-
+	/**
+	 * Finder
+	 *
+	 * System to find some datas, you can use like :
+	 * 
+	 * ->find('first') 	Will find the first row data
+	 * ->find('all') 	Will find all datas
+	 * ->find(5) 		Will find for primary key = 5
+	 * ->find('last') 	Will find the last row data
+	 * 
+	 * @access	public
+	 * @param 	mixed 	string/int
+	 * @return	mixed 	array/object
+	 */
 	public function find($type)
 	{
 		if ($type === 'all')
@@ -105,13 +136,13 @@ class Base_model extends CI_Model {
 		if ($type === 'first')
 		{
 			// Return the first row datas
-			return $this->db->get($this->_table)->first_row($this->_return_method['first'][$this->_return_type]);	
+			return $this->db->get($this->_table)->first_row($this->_return_methods['first'][$this->_return_type]);	
 		}
 
 		if ($type === 'last')
 		{
 			// Return the last row datas
-			return $this->db->get($this->_table)->last_row($this->_return_method['last'][$this->_return_type]);
+			return $this->db->get($this->_table)->last_row($this->_return_methods['last'][$this->_return_type]);
 		}
 
 
@@ -119,14 +150,29 @@ class Base_model extends CI_Model {
 
 	// --------------------------------------------------------------------
 
+	/**
+	 * Save
+	 *
+	 * Will save your datas
+	 *
+	 * @access	private
+	 * @param 	mixed 	array/object 	Your datas
+	 * @return	int 	Value of primary key saved
+	 */
 	public function save($datas)
 	{
 		// Add created_at and updated_at if doesn't exists
 		if ($this->_auto_timestamp === TRUE)
 		{
-
+			// Like time(), but respect CI system
 			$now = now();
 
+			if (is_object($datas))
+			{
+				// Convert with array way
+				$datas = (array) $datas;
+			}
+	
 			if ( ! isset($datas['created_at']))
 			{
 				$datas['created_at'] = $now;
@@ -136,9 +182,11 @@ class Base_model extends CI_Model {
 			{
 				$datas['updated_at'] = $now;
 			}
+			
+
+
 
 		}
-
 
 		// Suffix datas if needed
 		$datas = $this->_suffix_datas($datas);
@@ -152,13 +200,33 @@ class Base_model extends CI_Model {
 
 	// --------------------------------------------------------------------
 
-	// @TODO -> add suffix datas system
-	public function where($key, $value = NULL, $escape = TRUE)
+	/**
+	 * Where
+	 *
+	 * 
+	 *
+	 * @access	public
+	 * @return	object
+	 */
+	public function where($key, $value='')
 	{
-		// Perform where request
-		// Just a shortcut of db_active_red class
-		// Nothing to see here ...
-		$this->db->where($key, $value, $escape);
+		// Find by primary key
+		if (is_int($key) && empty($value))
+		{
+			$this->db->where($this->_primary_key, $key);
+		}
+		// Associative array method
+		elseif (is_array($key) && empty($value))
+		{
+			$key = $this->_suffix_datas($key);
+
+			$this->db->where($key);
+		}
+		// Key/value
+		else
+		{
+			$this->db->where($this->_suffix_label . $key, $value);
+		}
 
 		// Chaining
 		return $this;
@@ -166,17 +234,31 @@ class Base_model extends CI_Model {
 
 	// --------------------------------------------------------------------
 
+	/**
+	 * Update
+	 *
+	 * Method to update datas in the database
+	 *
+	 * @access	public
+	 * @param 	mixed 	array/object 	Datas to update
+	 * @return	int
+	 */
 	public function update($datas)
 	{
 
 		if ($this->_auto_timestamp === TRUE)
 		{
+			if (is_object($datas))
+			{
+				// Convert with array way
+				$datas = (array) $datas;
+			}
+
 			// Add updated_at if doesn't exists
 			if ( ! isset($datas['updated_at']))
 			{
 				$datas['updated_at'] = now();
 			}
-
 		}
 
 		// Suffix datas if needed
@@ -190,6 +272,14 @@ class Base_model extends CI_Model {
 
 	// --------------------------------------------------------------------
 
+	/**
+	 * Delete
+	 *
+	 * Delete datas
+	 *
+	 * @access	public
+	 * @return	int
+	 */
 	public function delete()
 	{
 		// Delete datas
@@ -201,11 +291,21 @@ class Base_model extends CI_Model {
 
 	// --------------------------------------------------------------------
 
+	/**
+	 * Suffix datas
+	 *
+	 * Auto suffix datas 
+	 *
+	 * @access	private
+	 * @param 	mixed 	array/object 	Datas to suffix
+	 * @return	mixed 	array/object
+	 */
 	private function _suffix_datas($datas)
 	{
 		// Do you want the suffix label system ?
 		if ($this->_suffix_label !== FALSE)
 		{
+			
 			$suffixed = array();
 
 			// Loop all datas
@@ -214,14 +314,22 @@ class Base_model extends CI_Model {
 				// Add in suffixed array
 				$suffixed[$this->_suffix_label . $key] = $data;
 			}
-
+			
 			return $suffixed;
+	
 		}
 
 		return $datas;
 	}
 
-
+	/**
+	 * Fetch table
+	 *
+	 * Check and guess table to use and fill $_table and $_name_model
+	 *
+	 * @access	private
+	 * @return	void
+	 */
 	private function _fetch_table()
 	{
 		// No table specified, so we will try guess
@@ -244,6 +352,14 @@ class Base_model extends CI_Model {
 		}
 	}
 
+	/**
+	 * Fetch return type
+	 *
+	 * If return type not specified, we will add default value
+	 *
+	 * @access	private
+	 * @return	void
+	 */
 	private function _fetch_return_type()
 	{	
 		// If no return type specified or different of object and array, add by default "array"
@@ -253,15 +369,32 @@ class Base_model extends CI_Model {
 		}	
 	}
 
+	/**
+	 * Fetch primary key
+	 *
+	 * If primary key not specified, we will add default value
+	 *
+	 * @access	private
+	 * @return	void
+	 */
 	private function _fetch_primary_key()
 	{
 		// If no primary key specified, add by default "id"
 		if (empty($this->_primary_key))
 		{
-			$this->_primary_key = 'id';
+			$this->_primary_key = $this->_suffix_label . 'id';
 		}
 	}
 
+	/**
+	 * Fetch suffix label
+	 *
+	 * Check if the developer wants use the suffix system.
+	 * If it's TRUE but empty we will guess suffix_label to use
+	 *
+	 * @access	private
+	 * @return	void
+	 */
 	private function _fetch_suffix_label()
 	{
 		// Do you want suffix label system ?
