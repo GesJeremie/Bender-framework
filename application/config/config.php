@@ -64,6 +64,8 @@ $config['url_suffix'] = '';
 | Security required params
 |--------------------------------------------------------------------------
 |
+| @package Bender Framework
+|
 | This option allows the system to check if you get all required params
 | to execute the method of controller.
 |
@@ -87,7 +89,7 @@ $config['url_suffix'] = '';
 | If you execute request like : http://www.example.com/logs/delete/
 | without params, you will get a PHP error.
 |
-| Note : Keep in mind, the app user can edit as he want the browser url
+| Note : Keep in mind, the app user can edit as he wants the browser url
 |
 | Just put TRUE for this option and the system display 404 error than PHP
 | error.
@@ -216,7 +218,7 @@ $config['directory_trigger']	= 'd'; // experimental not currently in use
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = 4;
+$config['log_threshold'] = 0;
 
 /*
 |--------------------------------------------------------------------------

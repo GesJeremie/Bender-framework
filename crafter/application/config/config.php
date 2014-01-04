@@ -64,6 +64,8 @@ $config['url_suffix'] = '';
 | Security required params
 |--------------------------------------------------------------------------
 |
+| @package Bender Framework
+|
 | This option allows the system to check if you get all required params
 | to execute the method of controller.
 |

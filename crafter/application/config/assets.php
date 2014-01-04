@@ -12,7 +12,7 @@ $assets['compress'] = array(
 
 	'development' => FALSE,
 	'testing'     => FALSE,
-	'production'  => FALSE
+	'production'  => TRUE
  
 	);
 
@@ -109,15 +109,6 @@ $assets['js'] = array(
 
 	array(
 
-		'name' => 'cssrefresh',
-		'version' => '',
-		'src' => 'js/cssrefresh.js',
-		'compress' => TRUE
-
-		),
-
-	array(
-
 		'name' => 'bootstrap',
 		'version' => '',
 		'src' => 'libs/bootstrap-3.0.3/js/bootstrap.js',
@@ -133,15 +124,6 @@ $assets['js'] = array(
 		'compress' => TRUE
 
 		),
-
-	array(
-
-		'name' => 'main',
-		'version' => '',
-		'src' => 'js/main.js',
-		'compress' => TRUE
-
-		)
 
 	);
 

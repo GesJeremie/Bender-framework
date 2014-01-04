@@ -28,6 +28,15 @@
  */
 
 /**
+ * BenderFramework Version
+ *
+ * @var string
+ *
+ */
+	define('BENDER_VERSION', '0.1');
+
+
+/**
  * CodeIgniter Version
  *
  * @var string
