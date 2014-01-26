@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class {name_controller} extends Base_Controller {
+class {ucfirst_name_controller} extends Base_Controller {
 
 	protected $libs = array();
 	protected $helpers = array();
@@ -19,5 +19,5 @@ class {name_controller} extends Base_Controller {
 
 }
 
-/* End of file {name_controller}.php */
-/* Location: ./application/controllers/{name_controller}.php */
+/* End of file {ucfirst_name_controller}.php */
+/* Location: ./application/controllers/{subfolder}{name_controller}.php */

@@ -28,7 +28,21 @@ class Skeleton_lib {
 	 */
 	public function __construct()
 	{
+		$this->load->library('parser');
+	}
 
+	/**
+	 * __get
+	 *
+	 * Access CI's loaded classes
+	 *
+	 * @param	string
+	 * @access private
+	 */
+	function __get($key)
+	{
+		$CI =& get_instance();
+		return $CI->$key;
 	}
 
 	/**
@@ -44,22 +58,23 @@ class Skeleton_lib {
 	 */
 	public function run($load_skeleton, $datas, $output)
 	{
-
+		// Open file
 		$content = file_get_contents(APPPATH . 'views/_skeletons/' . ltrim($load_skeleton, '/') . '.php');
-	
-		foreach ($datas as $key => $value)
-		{
-			$content = str_replace('{' . $key . '}', $value, $content);
-		}
-		
+
+		// Parse string
+		$content = $this->parser->parse_string($content, $datas, TRUE);
+
+		// Output on the path
 		$result = file_put_contents($output, $content);
 
+		// Not created ?
 		if ($result === FALSE) {
 
 			return FALSE;
 
 		}
 
+		// Success !
 		return TRUE;
 
 	}
