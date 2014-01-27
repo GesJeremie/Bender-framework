@@ -42,3 +42,10 @@ Libs {
   - Assets (register, compress, etc.)
 }
 
+Crafter {
+
+  - UI for logs
+  - Change environment with one click
+  - Generate skeleton code quickly
+
+}
