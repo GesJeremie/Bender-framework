@@ -38,6 +38,7 @@ if ( ! function_exists('stylesheet_include_tag'))
 		// Check if assets library loaded
 		if (FALSE === ($OBJ =& _get_assets_object()))
 		{
+			log_message('error', 'Unable to load Assets library');
 			return FALSE;
 		}
 
@@ -76,6 +77,7 @@ if ( ! function_exists('javascript_include_tag'))
 		// Check if assets library loaded
 		if (FALSE === ($OBJ =& _get_assets_object()))
 		{
+			log_message('error', 'Unable to load Assets library');
 			return FALSE;
 		}
 
