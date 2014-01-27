@@ -65,3 +65,8 @@
 	<div class="spacer30"></div>
 
 	<? $this->load->view('logs/table_results', $logs) ?>
+
+	
+	<div class="container">
+		<?= $this->pagination->create_links() ?>
+	</div>
