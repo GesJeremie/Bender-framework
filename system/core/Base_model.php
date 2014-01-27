@@ -127,7 +127,7 @@ class Base_model extends CI_Model {
 			return $this->db->get($this->_table)->{$this->_return_methods['result'][$this->_return_type]}();
 		}
 
-		if (is_int($type))
+		if (is_numeric($type))
 		{
 			// Return datas by primary key (Ex. id = 5)
 			return $this->db->get_where($this->_table, array($this->_primary_key => $type))->{$this->_return_methods['result'][$this->_return_type]}();
