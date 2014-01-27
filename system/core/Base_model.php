@@ -130,7 +130,7 @@ class Base_model extends CI_Model {
 		if (is_numeric($type))
 		{
 			// Return datas by primary key (Ex. id = 5)
-			return $this->db->get_where($this->_table, array($this->_primary_key => $type))->{$this->_return_methods['result'][$this->_return_type]}();
+			return $this->db->where($this->_primary_key, $type)->get($this->_table)->first_row($this->_return_methods['first'][$this->_return_type]);	
 		}
 
 		if ($type === 'first')
