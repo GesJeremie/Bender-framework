@@ -235,7 +235,7 @@ class Base_controller extends CI_Controller {
 				}
 				else 
 				{
-					$base_name = $lib;
+					$base_name = NULL;
 
 					// The developper wants new name for this library ?
 					if (strpos(strtolower($lib), ' as ')) 
@@ -248,8 +248,8 @@ class Base_controller extends CI_Controller {
 
 					}
 
-					// Load library
-					$this->load->library($lib, array(), $base_name);
+					// Load library with no configuration and new name if exists
+					$this->load->library($lib, NULL, $base_name);
 
 				}
 			}
